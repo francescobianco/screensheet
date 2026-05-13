@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="ScreensheetWindow" parent="GtkApplicationWindow">
+    <property name="title">Screensheet</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkHeaderBar" id="header_bar">
+            <child type="title">
+              <object class="GtkToolbar" id="toolbar">
+                <property name="halign">center</property>
+                <style>
+                  <class name="osd"/>
+                </style>
+                <child>
+                  <object class="GtkToggleButton" id="btn_arrow">
+                    <property name="icon-name">go-next-symbolic</property>
+                    <property name="tooltip-text">Arrow</property>
+                    <property name="active">True</property>
+                    <signal name="toggled" handler="on_tool_arrow" swapped="true"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btn_line">
+                    <property name="icon-name">format-text-direction-symbolic</property>
+                    <property name="tooltip-text">Line</property>
+                    <signal name="toggled" handler="on_tool_line" swapped="true"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btn_rect">
+                    <property name="icon-name">draw-rectangle-symbolic</property>
+                    <property name="tooltip-text">Rectangle</property>
+                    <signal name="toggled" handler="on_tool_rect" swapped="true"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btn_free">
+                    <property name="icon-name">tool-pencil-symbolic</property>
+                    <property name="tooltip-text">Free Draw</property>
+                    <signal name="toggled" handler="on_tool_free" swapped="true"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btn_text">
+                    <property name="icon-name">x-office-document-symbolic</property>
+                    <property name="tooltip-text">Text</property>
+                    <signal name="toggled" handler="on_tool_text" swapped="true"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="start">
+              <object class="GtkButton">
+                <property name="icon-name">document-open-symbolic</property>
+                <property name="tooltip-text">Open Image</property>
+                <property name="action-name">win.open</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkButton">
+                <property name="icon-name">document-save-symbolic</property>
+                <property name="tooltip-text">Save</property>
+                <property name="action-name">win.save</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow" id="canvas_area">
+            <property name="vexpand">True</property>
+            <property name="hexpand">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

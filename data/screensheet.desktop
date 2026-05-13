@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Screensheet
+Comment=Annotate images with arrows, text, and drawings
+Exec=screensheet %U
+Icon=screensheet
+Terminal=false
+Type=Application
+Categories=Graphics;Viewer;GTK;
+MimeType=image/png;image/jpeg;image/bmp;image/gif;
+Keywords=screenshot;annotation;image;draw;arrow;
