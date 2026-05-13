@@ -17,7 +17,6 @@ class ScreensheetWindow(Gtk.ApplicationWindow):
         self.pixbuf = None
 
         self._build_ui()
-        self._setup_actions()
 
     def _build_ui(self):
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -37,7 +36,7 @@ class ScreensheetWindow(Gtk.ApplicationWindow):
         toolbar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
         toolbar.add_css_class("linked")
 
-        self.tool_group = Gtk.CheckButton()
+        self.tool_buttons = []
 
         tools = [
             ("go-next-symbolic", "Arrow", "arrow", True),
@@ -47,14 +46,20 @@ class ScreensheetWindow(Gtk.ApplicationWindow):
             ("x-office-document-symbolic", "Text", "text", False),
         ]
 
+        first_btn = None
         for icon, tooltip, tool, active in tools:
-            btn = Gtk.CheckButton()
-            btn.set_icon_name(icon)
+            btn = Gtk.ToggleButton()
+            img = Gtk.Image.new_from_icon_name(icon)
+            btn.set_child(img)
             btn.set_tooltip_text(tooltip)
-            btn.set_group(self.tool_group)
+            if first_btn is None:
+                first_btn = btn
+            else:
+                btn.set_group(first_btn)
             btn.set_active(active)
             btn.connect("toggled", self.on_tool_changed, tool)
             toolbar.append(btn)
+            self.tool_buttons.append(btn)
 
         header.set_title_widget(toolbar)
 
@@ -68,23 +73,6 @@ class ScreensheetWindow(Gtk.ApplicationWindow):
         main_box.append(scrolled)
 
         self.set_child(main_box)
-
-    def _setup_actions(self):
-        open_action = Gio.SimpleAction(name="open")
-        open_action.connect("activate", self.on_open)
-        self.add_action(open_action)
-
-        save_action = Gio.SimpleAction(name="save")
-        save_action.connect("activate", self.on_save)
-        self.add_action(save_action)
-
-        quit_action = Gio.SimpleAction(name="quit")
-        quit_action.connect("activate", lambda *args: self.close())
-        self.add_action(quit_action)
-
-        self.set_accels_for_action("win.open", ["<Ctrl>o"])
-        self.set_accels_for_action("win.save", ["<Ctrl>s"])
-        self.set_accels_for_action("win.quit", ["<Ctrl>q"])
 
     def on_tool_changed(self, btn, tool):
         if btn.get_active():
